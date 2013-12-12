@@ -27,6 +27,9 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         # get_argument seems a dictionary and it tries to get 
         # value for key 'greeting' ?
+        # it may not be a dictionary, but it sure gets the value of
+        # 'greeting' from query string
+        # eg. http://localhost:8089/?greeting=Hello
         greeting = self.get_argument('greeting', 'Hola!')
 
         # No self.wfile.write, then how about self.rfile ? 

@@ -41,6 +41,9 @@ class IndexHandler(tornado.web.RequestHandler):
         #lets print author here
         self.write('You just accessed the server written by: %s' % options.author)
 
+    def write_error(self, status_code, **kwargs):
+        self.write("Damn bitch! You caused a %d error." % status_code)    
+
 if __name__ == "__main__":
     tornado.options.parse_command_line()
 

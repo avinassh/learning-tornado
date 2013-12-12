@@ -22,12 +22,18 @@ class ReverseHandler(tornado.web.RequestHandler):
     def get(self, input):
         self.write(input[::-1])
 
+    def write_error(self, status_code, **kwargs):
+        self.write("Damn bitch! You caused a %d error." % status_code) 
+
 
 class WrapHandler(tornado.web.RequestHandler): 
     def post(self):
         text = self.get_argument('text')
         width = self.get_argument('width', 40) 
         self.write(textwrap.fill(text, width))
+
+    def write_error(self, status_code, **kwargs):
+        self.write("Damn bitch! You caused a %d error." % status_code)     
 
 
 if __name__ == "__main__": 

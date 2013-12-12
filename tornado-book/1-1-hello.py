@@ -8,6 +8,12 @@ import tornado.web
 
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
+# how define takes port input from command line?
+
+# tornado.options parses the inputs 
+
+# the options within define are available as global when it is same as
+# one of command line arugment, here it is 'port'. cool.
 
 class IndexHandler(tornado.web.RequestHandler): 
     def get(self):

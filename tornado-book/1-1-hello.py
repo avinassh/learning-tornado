@@ -28,7 +28,7 @@ class IndexHandler(tornado.web.RequestHandler):
         self.write(greeting + ',  dude!')
 
         #lets print author here
-        self.write('You just accessed the server written by: ', options.author)
+        self.write('You just accessed the server written by: %s' % options.author)
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()

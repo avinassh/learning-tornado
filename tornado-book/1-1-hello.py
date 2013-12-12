@@ -52,7 +52,10 @@ if __name__ == "__main__":
     # It should be a list of tuples, with each tuple containing a 
     # regular expression to match as its first member and a 
     # RequestHandler class as its second member.
-    # now the /cool, /cooldude, /coolwhatever gives the 200 status response 
+    # now the /cool, /cooldude, /coolwhatever gives the 200 status response
+    # Tornado treats these regular expressions as though they contain 
+    # beginning-of-line and end-of-line anchors 
+    # e.g. the string "/" is assumed to mean "^/$" 
     app = tornado.web.Application(handlers=[(r"/", IndexHandler), (r"/cool.*", IndexHandler)]) 
     http_server = tornado.httpserver.HTTPServer(app)
 

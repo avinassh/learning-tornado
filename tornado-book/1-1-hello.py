@@ -34,7 +34,8 @@ class IndexHandler(tornado.web.RequestHandler):
         # here it is 'Hola!' 
         greeting = self.get_argument('greeting', 'Hola!')
 
-        # No self.wfile.write, then how about self.rfile ? 
+        # No self.wfile.write, then how about self.rfile ?
+        # takes the string parameter and writes it to HTTP response 
         self.write(greeting + ',  dude!')
 
         #lets print author here
@@ -44,12 +45,24 @@ if __name__ == "__main__":
     tornado.options.parse_command_line()
 
     # seperate handlers? looks cool
-    app = tornado.web.Application(handlers=[(r"/", IndexHandler)]) 
+
+    # app is an instance of Tornado's Application class is created
+    # __init__ method of the Application class takes 'handlers' as a 
+    # argument to initiate the object
+    # It should be a list of tuples, with each tuple containing a 
+    # regular expression to match as its first member and a 
+    # RequestHandler class as its second member.
+    # now the /cool, /cooldude, /coolwhatever gives the 200 status response 
+    app = tornado.web.Application(handlers=[(r"/", IndexHandler), (r"/cool.*", IndexHandler)]) 
     http_server = tornado.httpserver.HTTPServer(app)
 
     # listen on options port 
     http_server.listen(options.port)
     # start it 
+    # following creates an instance of IOLoop, now program is ready to listen
+    # on the given ports
+    # app object is nowhere mentioned here, following seems generic line
+    # which will be same in all Tornado apps
     tornado.ioloop.IOLoop.instance().start()
     # below thing won't stop
     tornado.ioloop.IOLoop.instance().stop()

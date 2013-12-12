@@ -18,6 +18,11 @@ define("port", default=8000, help="run on the given port", type=int)
 #let me define one more global
 define("author", default='avi', help="the author of this server", type=str)
 
+# type specifies what kind of type of argument it should be
+# and it converts it to according to that
+# eg. --author = 5 will be converted to str(5)
+# eg. --port = abc will throw an error becuse of int(abc)
+
 class IndexHandler(tornado.web.RequestHandler): 
     def get(self):
         # get_argument seems a dictionary and it tries to get 

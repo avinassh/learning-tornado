@@ -30,6 +30,8 @@ class IndexHandler(tornado.web.RequestHandler):
         # it may not be a dictionary, but it sure gets the value of
         # 'greeting' from query string
         # eg. http://localhost:8089/?greeting=Hello
+        # if no argument given, then second argument is considered
+        # here it is 'Hola!' 
         greeting = self.get_argument('greeting', 'Hola!')
 
         # No self.wfile.write, then how about self.rfile ? 

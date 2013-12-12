@@ -15,6 +15,9 @@ define("port", default=8000, help="run on the given port", type=int)
 # the options within define are available as global when it is same as
 # one of command line arugment, here it is 'port'. cool.
 
+#let me define one more global
+define("author", default='avi', help="the author of this server", type=str)
+
 class IndexHandler(tornado.web.RequestHandler): 
     def get(self):
         # get_argument seems a dictionary and it tries to get 
@@ -23,6 +26,9 @@ class IndexHandler(tornado.web.RequestHandler):
 
         # No self.wfile.write, then how about self.rfile ? 
         self.write(greeting + ',  dude!')
+
+        #lets print author here
+        self.write('You just accessed the server written by: ', options.author)
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()

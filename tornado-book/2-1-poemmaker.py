@@ -43,10 +43,36 @@ class PoemPageHandler(tornado.web.RequestHandler):
         verb = self.get_argument('verb')
         noun3 = self.get_argument('noun3')
         # render function takes the html to render and also the arguments
-        # to replace them in the template
+        # to replace the placeholders in the template
         self.render('2-1-poem.html', roads=noun1, wood=noun2, made=verb,
             difference=noun3)
 
+# It seems the render function makes of generate function internally
+# generate module is present within Template class
+# here is one fine example :
+# 
+# >>> from tornado.template import Template
+# >>> content = Template("<html><body><h1>{{ header }}</h1></body></html>") 
+# >>> print content.generate(header="Welcome!") 
+# <html><body><h1>Welcome!</h1></body></html>
+
+# Interestingly, we can put Python expressions within these placeholders
+# the tornado will evaluate and render it on browser. We can also use control
+# statements like if, for, while, and try. sweet.
+#
+# >>> from tornado.template import Template
+# >>> print Template("{{ 1+1 }}").generate()
+# 2
+
+# e.g. use of control statements in templates.
+# if 'books' is a list, then below template will create a HTML list and 
+# the list contents will be list items
+#
+# <ul>
+#   {% for book in books %}
+#       <li>{{ book }}</li> 
+#    {% end %}
+# </ul>
 
 if __name__ == '__main__':
     # to parse command line 
@@ -56,6 +82,7 @@ if __name__ == '__main__':
     # handler specifies the methods to call when requests are made on 
     # / and /poem
     # template_path specifies where to look for templates 
+    # render function makes use of template_path
     app = tornado.web.Application(
         handlers=[(r'/', IndexHandler),(r'/poem', PoemPageHandler)],
         template_path=os.path.join(os.path.dirname(__file__), "2-1-templates"))

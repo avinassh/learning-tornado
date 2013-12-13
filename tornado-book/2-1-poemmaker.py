@@ -73,6 +73,17 @@ class PoemPageHandler(tornado.web.RequestHandler):
 #       <li>{{ book }}</li> 
 #    {% end %}
 # </ul>
+#
+# caller: 
+# self.render( "book.html", books=[ "Learning Python",
+# "Programming Collective Intelligence", "Restful Web Services" ] )
+#
+# Output:
+# <ul>
+# <li>Learning Python</li>
+# <li>Programming Collective Intelligence</li> 
+# <li>Restful Web Services</li>
+# </ul>
 
 if __name__ == '__main__':
     # to parse command line 

@@ -20,11 +20,11 @@ define("port", default=8000, help="run on the given port", type=int)
 
 
 # This is index file handler. Here the render functions displays the HTML
-# 2-1-index.html on the browser when GET request is made on root
+# index.html on the browser when GET request is made on root
 # GET on http://localhost:8000/
 class IndexHandler(tornado.web.RequestHandler): 
     def get(self):
-        self.render('2-1-index.html')
+        self.render('index.html')
 
 
 # This is to handle POST
@@ -44,7 +44,7 @@ class PoemPageHandler(tornado.web.RequestHandler):
         noun3 = self.get_argument('noun3')
         # render function takes the html to render and also the arguments
         # to replace the placeholders in the template
-        self.render('2-1-poem.html', roads=noun1, wood=noun2, made=verb,
+        self.render('poem.html', roads=noun1, wood=noun2, made=verb,
             difference=noun3)
 
 # It seems the render function makes of generate function internally
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     # render function makes use of template_path
     app = tornado.web.Application(
         handlers=[(r'/', IndexHandler),(r'/poem', PoemPageHandler)],
-        template_path=os.path.join(os.path.dirname(__file__), "2-1-templates"))
+        template_path=os.path.join(os.path.dirname(__file__), "templates"))
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()

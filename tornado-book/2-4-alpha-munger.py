@@ -29,8 +29,8 @@ class MungedPageHandler(tornado.web.RequestHandler):
         text_to_change = self.get_argument('change')
         source_map = self.map_by_first_letter(source_text)
         change_lines = text_to_change.split('\r\n')
-        self.render('munged.html', source_map=source_map, change_lines=change_lines,
-            choice=random.choice)
+        self.render('munged.html', source_map=source_map, 
+            change_lines=change_lines, choice=random.choice)
 
 
 if __name__ == '__main__': 
@@ -44,6 +44,10 @@ if __name__ == '__main__':
     # debug mode invokes tornado.autoreload, where tornado will restart the 
     # server for each time main python file is changed and refreshes the 
     # templates as they change
+
+    # static_path can be sent as a paramter to Application class which 
+    # specifies the path from where Tornado will serve static files.
+    
     http_server = tornado.httpserver.HTTPServer(app) 
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()        

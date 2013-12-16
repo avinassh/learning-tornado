@@ -27,3 +27,12 @@ print tornado.escape.url_escape('http://example.com/test test test', plus=False)
 # http%3A//example.com/test%20test%20test
 
 # tornado.escape.url_unescape() is also available with extra parameter plus
+
+# tornado.escape.json_encode(value) JSON encodes the given python object
+# tornado.escape.json_decode(value) is also available
+
+# tornado.escape.squeeze(value)removes all sequences of whitespaces and 
+# replaces with a single white space
+
+print tornado.escape.squeeze('Ha    Ha          Ha Ha Ha    Ha          Ha Ha ')
+# Ha Ha Ha Ha Ha Ha Ha Ha

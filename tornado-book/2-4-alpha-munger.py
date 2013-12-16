@@ -50,6 +50,26 @@ if __name__ == '__main__':
     # is converted to something like :
     # <link rel="stylesheet" href="/static/style.css?v=ab12">
 
+    # Comments with python expressions cannot be added in templates? 
+    # Seems so!
+
+    # tornado was trying to excute the follwing line even though it was
+    # commented
+    # <!--h1>Your text</h1>
+    #     <p>
+    #         {% for line in change_lines %}
+    #             {% for word in line.split(' ') %}
+    #                 {% if len(word) > 0 and word[0] in source_map %}
+    #                     <span class="replaced"
+    #                         title="{{word}}">{{ choice(source_map[word[0]]) }}</span>
+    #                 {% else %}
+    #                     <span class="unchanged" title="unchanged">{{word}}</span>
+    #                 {% end %}
+    #             {% end %}
+    #         <br>
+    #         {% end %}
+    #     </p-->
+
     http_server = tornado.httpserver.HTTPServer(app) 
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()        

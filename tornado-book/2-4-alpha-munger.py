@@ -37,8 +37,8 @@ if __name__ == '__main__':
     tornado.options.parse_command_line() 
     app = tornado.web.Application(
         handlers=[(r'/', IndexHandler), (r'/poem', MungedPageHandler)], 
-        template_path=os.path.join(os.path.dirname(__file__), "templates"), 
-        static_path=os.path.join(os.path.dirname(__file__), "static"), 
+        template_path=os.path.join(os.path.dirname(__file__), "2-4-templates"), 
+        static_path=os.path.join(os.path.dirname(__file__), "2-4-static"), 
         debug=True
         )
     http_server = tornado.httpserver.HTTPServer(app) 

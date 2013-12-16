@@ -41,6 +41,9 @@ if __name__ == '__main__':
         static_path=os.path.join(os.path.dirname(__file__), "2-4-static"), 
         debug=True
         )
+    # debug mode invokes tornado.autoreload, where tornado will restart the 
+    # server for each time main python file is changed and refreshes the 
+    # templates as they change
     http_server = tornado.httpserver.HTTPServer(app) 
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()        

@@ -25,9 +25,8 @@ class MungedPageHandler(tornado.web.RequestHandler):
 
     def post(self):
         source_text = self.get_argument('source')
-        #doubled_words = self.word_doubler(source_text)
-        self.render('munged.html', source_text=source_text, word_doubler=self.word_doubler)
-        #    doubled_words=doubled_words)
+        self.render('munged.html', source_text=source_text, 
+            word_doubler=self.word_doubler)
 
 
 if __name__ == '__main__': 

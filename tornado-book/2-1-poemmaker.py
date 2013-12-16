@@ -85,6 +85,13 @@ class PoemPageHandler(tornado.web.RequestHandler):
 # <li>Restful Web Services</li>
 # </ul>
 
+# In Tornado there are no restrictions about what expressions you can 
+# run within within if and for blocks. So you can run full python code within
+# this.
+
+# whoa even you can run {% set foo = 'bar' %} in control blocks
+
+
 if __name__ == '__main__':
     # to parse command line 
     tornado.options.parse_command_line()

@@ -48,6 +48,12 @@ if __name__ == '__main__':
     # static_path can be sent as a paramter to Application class which 
     # specifies the path from where Tornado will serve static files.
     
+    # Tornado also provides a module static_url to generate URLs. It is used 
+    # in templates.
+    # e.g. <link rel="stylesheet" href="{{ static_url("style.css") }}">
+    # is converted to something like :
+    # <link rel="stylesheet" href="/static/style.css?v=ab12">
+
     http_server = tornado.httpserver.HTTPServer(app) 
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()        

@@ -8,11 +8,18 @@ import pymongo
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
+# put your mongodb username and password 
+# "mongodb://username:password@staff.mongohq.com:someport/mongodb_name"
+# following is obtained from https://app.mongohq.com/username/mongo/mongodbname/admin
+MONGOHQ_URL = "mongodb://avi:test@paulo.mongohq.com:10065/testme"
+
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [(r"/(\w+)", WordHandler)]
-		conn = pymongo.Connection("localhost", 27017)
-		self.db = conn["definitions"]
+		# conn = pymongo.Connection("localhost", 27017)
+		# self.db = conn["definitions"]
+		conn = pymongo.Connection(MONGOHQ_URL)
+		self.db = conn.testme
 		tornado.web.Application.__init__(self, handlers, debug=True)
 
 class WordHandler(tornado.web.RequestHandler):

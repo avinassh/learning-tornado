@@ -4,6 +4,9 @@ import tornado.options
 import tornado.web
 
 import pymongo
+from bson import Binary, Code
+#from bson.json_util import dumps
+from bson import json_util
 
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
@@ -28,6 +31,7 @@ class WordHandler(tornado.web.RequestHandler):
 		word_doc = coll.find_one({"word": word})
 		if word_doc:
 			del word_doc["_id"]
+			#self.write(json_util.dumps (word_doc))
 			self.write(word_doc)
 		else:
 			self.set_status(404)

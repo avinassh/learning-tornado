@@ -55,10 +55,12 @@ class BookEditHandler(tornado.web.RequestHandler):
 			# coll = self.application.db.books
 			coll = self.application.db.burt.books
 			book = coll.find_one({"isbn": isbn})
-			self.render("book_edit.html", 
-				page_title="Burt's Books",
-				header_text="Edit book",
-				book=book)
+			if book is not None:
+				self.render("book_edit.html", page_title="Burt's Books",
+					header_text="Edit book", book=book)
+			else:
+				self.set_status(404)
+				self.write('You are trying to edit a book that is not in the database')	
 
 	def post(self, isbn=None):
 		import time

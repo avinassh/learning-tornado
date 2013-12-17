@@ -1,0 +1,14 @@
+.sample {
+	width: 500px;
+	border: 1px solid #555;
+	padding: 0 15px 0 15px;
+	margin: 15px;
+}
+
+	.sample .sample_details {
+		margin: 5px 10px 5px 0;
+	}
+	
+	.sample .sample_title {
+		color: #777;
+	}

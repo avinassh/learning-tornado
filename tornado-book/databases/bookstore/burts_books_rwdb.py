@@ -13,6 +13,11 @@ import pymongo
 
 define("port", default=8000, help="run on the given port", type=int)
 
+# put your mongodb username and password 
+# "mongodb://username:password@staff.mongohq.com:someport/mongodb_name"
+# following is obtained from https://app.mongohq.com/username/mongo/mongodbname/admin
+MONGOHQ_URL = "mongodb://avi:test@paulo.mongohq.com:10065/testme"
+
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
@@ -27,8 +32,10 @@ class Application(tornado.web.Application):
 			ui_modules={"Book": BookModule},
 			debug=True,
 			)
-		conn = pymongo.Connection("localhost", 27017)
-		self.db = conn["bookstore"]
+		# conn = pymongo.Connection("localhost", 27017)
+		# self.db = conn["bookstore"]
+		conn = pymongo.Connection(MONGOHQ_URL)
+		self.db = conn["testme"]
 		tornado.web.Application.__init__(self, handlers, **settings)
 
 
@@ -45,18 +52,19 @@ class BookEditHandler(tornado.web.RequestHandler):
 	def get(self, isbn=None):
 		book = dict()
 		if isbn:
-			coll = self.application.db.books
+			# coll = self.application.db.books
+			coll = self.application.db.burt.books
 			book = coll.find_one({"isbn": isbn})
-		self.render("book_edit.html",
-			page_title="Burt's Books",
-			header_text="Edit book",
-			book=book)
+			self.render("book_edit.html", 
+				page_title="Burt's Books",
+				header_text="Edit book",
+				book=book)
 
 	def post(self, isbn=None):
 		import time
 		book_fields = ['isbn', 'title', 'subtitle', 'image', 'author',
 			'date_released', 'description']
-		coll = self.application.db.books
+		coll = self.application.db.burt.books
 		book = dict()
 		if isbn:
 			book = coll.find_one({"isbn": isbn})
@@ -72,7 +80,7 @@ class BookEditHandler(tornado.web.RequestHandler):
 
 class RecommendedHandler(tornado.web.RequestHandler):
 	def get(self):
-		coll = self.application.db.books
+		coll = self.application.db.burt.books
 		books = coll.find()
 		self.render(
 			"recommended.html",

@@ -60,7 +60,9 @@ class BookEditHandler(tornado.web.RequestHandler):
 					header_text="Edit book", book=book)
 			else:
 				self.set_status(404)
-				self.write('You are trying to edit a book that is not in the database')	
+				self.write('You are trying to edit a book which is not in the database')	
+		else:
+			self.render("book_edit.html", page_title="Burt's Books", header_text="Edit book", book=book)
 
 	def post(self, isbn=None):
 		import time

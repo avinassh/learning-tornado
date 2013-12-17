@@ -30,7 +30,7 @@ class Application(tornado.web.Application):
 
 class WordHandler(tornado.web.RequestHandler):
 	def get(self, word):
-		coll = self.application.db
+		coll = self.application.db.words
 		word_doc = coll.find_one({"word": word})
 		#word_doc = self.application.db.find_one({"word": word})
 		if word_doc:

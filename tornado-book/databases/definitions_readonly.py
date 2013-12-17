@@ -19,16 +19,20 @@ MONGOHQ_URL = "mongodb://avi:test@paulo.mongohq.com:10065/testme"
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [(r"/(\w+)", WordHandler)]
+		# pymongo Connection object is instantiated
+		# in the __init__ method of the Application object.
 		#conn = pymongo.Connection("localhost", 27017)
 		#self.db = conn["example"]
 		conn = pymongo.Connection(MONGOHQ_URL)
 		self.db = conn.testme
+		#self.db = conn.testme.words
 		tornado.web.Application.__init__(self, handlers, debug=True)
 
 class WordHandler(tornado.web.RequestHandler):
 	def get(self, word):
-		coll = self.application.db.words
+		coll = self.application.db
 		word_doc = coll.find_one({"word": word})
+		#word_doc = self.application.db.find_one({"word": word})
 		if word_doc:
 			del word_doc["_id"]
 			#self.write(json_util.dumps (word_doc))

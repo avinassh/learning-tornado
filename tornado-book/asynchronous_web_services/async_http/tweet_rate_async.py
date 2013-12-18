@@ -1,23 +1,32 @@
+import urllib
+import json
+import datetime
+import time
+
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.httpclient
 
-import urllib
-import json
-import datetime
-import time
-
-from oauth import oauth
+from oauth import oauth # for twitter
 
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
 class IndexHandler(tornado.web.RequestHandler):
+    # decorator is used to leave the connection open till the callback is
+    # executed.  
     @tornado.web.asynchronous
     def get(self):
         query = self.get_argument('q')
+        # here AsynHTTPClient is used to to handle requests asynchrnously
+        # and a call back function is needed which will be called when the 
+        # response is returned.
+        # in this case, when twitter returns the response, the callback 
+        # is called.
+        # compared to earlier the code is now split in two functions to 
+        # handle the requests.
         client = tornado.httpclient.AsyncHTTPClient()
         url = "https://api.twitter.com/1.1/search/tweets.json?" + \
                 urllib.urlencode({"q": query, "result_type": "recent", "count": 100})
@@ -39,6 +48,10 @@ class IndexHandler(tornado.web.RequestHandler):
     <div style="font-size: 144px">%.02f</div>
     <div style="font-size: 24px">tweets per second</div>
 </div>""" % (self.get_argument('q'), tweets_per_second))
+        # self.finish() is very important as Tornado will never close the 
+        # connection on it's own. So by using self.finish we are telling
+        # Tornado to close the connection.
+        # otherise bad things will happen.. mmkay. 
         self.finish()
 
 if __name__ == "__main__":

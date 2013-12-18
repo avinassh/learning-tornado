@@ -1,23 +1,32 @@
-import tornado.httpserver
-import tornado.ioloop
-import tornado.options
-import tornado.web
-import tornado.httpclient
-
 import urllib
 import json
 import datetime
 import time
+
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web # why this?
+import tornado.httpclient
 
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
+		# localhost:8000/?q=stuff
+		# so here self.get_arugement gives the value of q i.e. 'stuff'
 		query = self.get_argument('q')
+		# Using tornado's HTTPClient class, an object is instantiated
+		# and fetch method is called on that  
 		client = tornado.httpclient.HTTPClient()
+		# urllib.urlencode formats it to proper url format %xx something like
+		# that. and response of client.fetch is stored in response
 		response = client.fetch("http://search.twitter.com/search.json?" + \
 				urllib.urlencode({"q": query, "result_type": "recent", "rpp": 100}))
+		# the response has header and body. As body contains the results, it 
+		# is used. And it is converted to python object from json 
+		# using json.loads
 		body = json.loads(response.body)
 		result_count = len(body['results'])
 		now = datetime.datetime.utcnow()

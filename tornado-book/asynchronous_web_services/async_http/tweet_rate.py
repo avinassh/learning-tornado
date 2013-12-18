@@ -36,7 +36,8 @@ class IndexHandler(tornado.web.RequestHandler):
         # result_count = len(body['results'])
         result_count = len(body['statuses'])
         now = datetime.datetime.utcnow()
-        raw_oldest_tweet_at = body['results'][-1]['created_at']
+        #raw_oldest_tweet_at = body['results'][-1]['created_at']
+        raw_oldest_tweet_at = body['statuses'][-1]['created_at']
         oldest_tweet_at = datetime.datetime.strptime(raw_oldest_tweet_at,
         #       "%a, %d %b %Y %H:%M:%S +0000")
                 "%a %b %d %H:%M:%S +0000 %Y")

@@ -3,6 +3,10 @@
 import time
 import oauth2
 
+# These keys can be obtained from creating a new app at 
+# https://dev.twitter.com/apps
+# ACCESS_KEY is now shown as ACCESS_TOKEN on Twitter's page
+# and ACCESS_SECRET as ACCESS_TOKEN_SECRET
 CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 ACCESS_KEY = ''
